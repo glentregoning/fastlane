@@ -36,7 +36,7 @@ module Match
     end
 
     def certificate_exists(params, certificate_id)
-      found = Spaceship.certificate.all.find do |cert|
+      found = Spaceship.certificate.all_by_platform(platform: params[:platform]).find do |cert|
         cert.id == certificate_id
       end
       return if found
@@ -49,7 +49,7 @@ module Match
     end
 
     def profile_exists(params, uuid)
-      found = Spaceship.provisioning_profile.all.find do |profile|
+      found = Spaceship.provisioning_profile.all_by_platform(platform: params[:platform]).find do |profile|
         profile.uuid == uuid
       end
       return if found
