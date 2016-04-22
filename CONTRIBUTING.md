@@ -72,7 +72,7 @@ If you're happy with what you see, leave a comment on the GitHub issue stating y
 
 ## Pull Requests (PRs)
 
-Pull requests are always welcome :simple_smile:
+Pull requests are always welcome :smile:
 
 PRs should reference an open GitHub issue (preferably those marked with the [help wanted](https://github.com/fastlane/fastlane/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22) label). Referring to the issue in the description of your PR is required and is really helpful for establishing the context needed for review.
 
@@ -116,7 +116,7 @@ When working on something, directly edit the Ruby files in the project folders. 
 To run the modified version of the tool, run the following in the project directory
 
 ```
-./bin/[tool_name]
+.[tool_name]/bin/[tool_name]
 ```
 
 or install the local copy (might require `sudo`)
@@ -135,56 +135,6 @@ binding.pry
 ```
 
 You then jump into an interactive debugger that allows you to print out variables, call methods and much more. Continue running the original script using `control` + `d`
-
-## Interacting with the user
-
-You'll see some old code still using `puts` or `Helper.log.info` to print out values. From now, please only use the new `UI` class to interact with the user (both input and output)
-
-```ruby
-UI.message "Neutral message (usually white)"
-UI.success "Succesully finished processing (usually green)"
-UI.error "Wahaha, what's going on here! (usually red)"
-UI.important "Make sure to use Windows (usually yellow)"
-
-UI.header "Inputs" # a big box
-
-name = UI.input("What's your name? ")
-if UI.confirm("Are you '#{name}'?")
-  UI.success "Oh yeah"
-else
-  UI.error "Wups, invalid"
-end
-
-UI.password("Your password please: ") # password inputs are hidden
-
-###### A "Dropdown" for the user
-project = UI.select("Select your project: ", ["Test Project", "Test Workspace"])
-
-UI.success("Okay #{name}, you selected '#{project}'")
-
-###### To run a command use
-FastlaneCore::CommandExecutor.execute(command: "ls",
-                                    print_all: true,
-                                        error: proc do |error_output|
-                                          # handle error here
-                                        end)
-
-###### or if you just want to receive a simple value use this only if the command doesn't take long
-diff = Helper.backticks("git diff")
-
-###### fastlane "crash" because of a user error everything that is caused by the user and is not unexpected
-UI.user_error!("You don't have a project in the current directory")
-
-###### an actual crash when something unexpected happened
-UI.crash!("Network timeout")
-
-###### a deprecation message
-UI.deprecated("The '--key' parameter is deprecated")
-```
-
-The output will look like this
-
-<img src="fastlane_core/assets/UI.png" width="550" />
 
 ## Running tests
 

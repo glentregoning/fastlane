@@ -199,10 +199,11 @@ module Spaceship
         #  It is recommend to not pass devices as spaceship will automatically add all devices for AdHoc
         #  and Development profiles and add none for AppStore and Enterprise Profiles
         # @param mac (Bool) (optional): Pass true if you're making a Mac provisioning profile
+        # @param sub_platform (String) Used to create tvOS profiles at the moment. Value should equal 'tvOS' or nil.
         # @return (ProvisioningProfile): The profile that was just created
-        def create!(name: nil, bundle_id: nil, certificate: nil, devices: [], mac: false)
+        def create!(name: nil, bundle_id: nil, certificate: nil, devices: [], mac: false, sub_platform: nil)
           puts '`create!` is deprecated. Please use `create_by_platform!` instead.'.red
-          create_by_platform!(name: name, bundle_id: bundle_id, certificate: certificate, devices: devices, platform: mac ? Spaceship::Portal::App::MAC : Spaceship::Portal::App::IOS)
+          create_by_platform!(name: name, bundle_id: bundle_id, certificate: certificate, devices: devices, platform: mac ? Spaceship::Portal::App::MAC : Spaceship::Portal::App::IOS, sub_platform: sub_platform)
         end
 
         # Create a new provisioning profile

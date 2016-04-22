@@ -191,7 +191,7 @@ clear_derived_data
 
 Build your app right inside `fastlane` and the path to the resulting ipa is automatically available to all other actions.
 
-You should check out the [code signing guide](https://github.com/fastlane/fastlane/blob/master/docs/CodeSigning.md).
+You should check out the [code signing guide](https://github.com/fastlane/fastlane/blob/master/fastlane/docs/CodeSigning.md).
 
 ```ruby
 ipa(
@@ -223,7 +223,7 @@ See how [Product Hunt](https://github.com/fastlane/examples/blob/master/ProductH
 
 ### update_project_provisioning
 
-You should check out the [code signing guide](https://github.com/fastlane/fastlane/blob/master/docs/CodeSigning.md) before using this action.
+You should check out the [code signing guide](https://github.com/fastlane/fastlane/blob/master/fastlane/docs/CodeSigning.md) before using this action.
 
 Updates your Xcode project to use a specific provisioning profile for code signing, so that you can properly build and sign the .ipa file using the [ipa](#ipa) action or a CI service.
 
@@ -404,7 +404,7 @@ import_certificate certificate_path: "certs/dist.p12", certificate_password: ENV
 
 **Note**: `xcodebuild` is a complex command, so it is recommended to use [gym](https://github.com/fastlane/fastlane/tree/master/gym) for building your ipa file and [scan](https://github.com/fastlane/fastlane/tree/master/scan) for testing your app instead.
 
-Make sure to also read the [code signing guide](https://github.com/fastlane/fastlane/blob/master/docs/CodeSigning.md).
+Make sure to also read the [code signing guide](https://github.com/fastlane/fastlane/blob/master/fastlane/docs/CodeSigning.md).
 
 ```ruby
 # Create an archive. (./build-dir/MyApp.xcarchive)
@@ -684,7 +684,7 @@ xcov(
   workspace: "YourWorkspace.xcworkspace",
   scheme: "YourScheme",
   output_directory: "xcov_output"
-)  
+)
 ```
 
 ### [OCLint](http://oclint.org)
@@ -876,7 +876,33 @@ crashlytics(
   ipa_path: './app.ipa'
 )
 ```
+
 Additionally you can specify `notes`, `emails`, `groups` and `notifications`.
+
+#### Distributing to Groups
+
+When using the `groups` parameter, it's important to use the group **alias** names for each group you'd like to distribute to. A group's alias can be found in the web UI. If you're viewing the Beta page, you can open the groups dialog here:
+
+![Crashlytics Beta Groups Navigation](../assets/Beta-Groups-Nav.png)
+
+Each group's alias is then listed here:
+
+![Crashlytics Beta Groups Navigation](../assets/Beta-Group-Alias.png)
+
+There are a couple reasons why aliases exist:
+
+1. They are restricted to a safer set of characters to try to make command line invocations a bit easier
+1. They are created once when the group is created, but are not affected by later edits to the group. This allows your scripts to be stable, even if you decide to change the group's name.
+
+So, for the example group above, you should specify
+
+`groups: ["dev-team-1"]` :white_check_mark:
+
+_not_
+
+`groups: ["Android Devs"]` :x:
+
+#### Environment Variables
 
 The following environment variables may be used in place of parameters: `CRASHLYTICS_API_TOKEN`, `CRASHLYTICS_BUILD_SECRET`, and `CRASHLYTICS_FRAMEWORK_PATH`.
 
@@ -1258,7 +1284,7 @@ update_info_plist(
   plist_path: "path/to/Info.plist",
   block: lambda { |plist|
     urlScheme = plist['CFBundleURLTypes'].find{|scheme| scheme['CFBundleURLName'] == 'com.acme.default-url-handler'}
-    urlScheme[:CFBundleURLSchemes] = ['acme-production']    
+    urlScheme[:CFBundleURLSchemes] = ['acme-production']
   }
 )
 ```
@@ -1908,6 +1934,21 @@ onesignal(
 )
 ```
 
+### [Flock](http://flock.co)
+
+Send a text message to a Flock group.
+
+```ruby
+flock(
+  message: "Hello"
+  token: "xxx"
+)
+```
+
+To obtain the token, create a new
+[incoming message webhook](https://dev.flock.co/wiki/display/FlockAPI/Incoming+Webhooks)
+in your Flock admin panel.
+
 ## Other
 
 ### update_fastlane
@@ -2436,4 +2477,14 @@ Reset all the iOS simulators. Useful with test actions to ensure a clean simulat
 
 ```ruby
 reset_simulators
+```
+
+### [danger](https://github.com/danger/danger)
+
+To run [danger](https://github.com/danger/danger) add this to your `Fastfile`
+
+```ruby
+lane :danger do
+  danger
+end
 ```

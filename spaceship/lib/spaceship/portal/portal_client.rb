@@ -462,9 +462,9 @@ module Spaceship
     end
 
     # <b>DEPRECATED:</b> Use <tt>create_provisioning_profile_by_platform!</tt> instead.
-    def create_provisioning_profile!(name, distribution_method, app_id, certificate_ids, device_ids, mac: false)
+    def create_provisioning_profile!(name, distribution_method, app_id, certificate_ids, device_ids, mac: false, sub_platform: nil)
       puts '`create_provisioning_profile!` is deprecated. Please use `create_provisioning_profile_by_platform!` instead.'.red
-      create_provisioning_profile_by_platform!(name, distribution_method, app_id, certificate_ids, device_ids, platform: mac ? Spaceship::Portal::App::MAC : Spaceship::Portal::App::IOS)
+      create_provisioning_profile_by_platform!(name, distribution_method, app_id, certificate_ids, device_ids, platform: mac ? Spaceship::Portal::App::MAC : Spaceship::Portal::App::IOS, sub_platform: sub_platform)
     end
 
     def create_provisioning_profile_by_platform!(name, distribution_method, app_id, certificate_ids, device_ids, platform: Spaceship::Portal::App::IOS, sub_platform: nil)
