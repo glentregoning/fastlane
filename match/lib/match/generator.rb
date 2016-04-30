@@ -9,7 +9,8 @@ module Match
         development: params[:type] == "development",
         output_path: output_path,
         force: true, # we don't need a certificate without its private key, we only care about a new certificate
-        username: params[:username]
+        username: params[:username],
+        team_id: params[:team_id]
       })
 
       Cert.config = arguments
@@ -49,6 +50,7 @@ module Match
         cert_id: certificate_id,
         provisioning_name: profile_name,
         ignore_profiles_with_different_name: true,
+        team_id: params[:team_id],
         platform: params[:platform]
       })
 
