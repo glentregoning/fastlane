@@ -505,7 +505,7 @@ module Spaceship
     def build_trains(app_id, testing_type, platform: nil)
       raise "app_id is required" unless app_id
       url = "ra/apps/#{app_id}/trains/?testingType=#{testing_type}"
-      url = url + "&platform=#{platform}" unless platform.nil?
+      url += "&platform=#{platform}" unless platform.nil?
       r = request(:get, url)
       parse_response(r, 'data')
     end

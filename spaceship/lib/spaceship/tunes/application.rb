@@ -249,7 +249,7 @@ module Spaceship
       # The numbers of all build trains that were uploaded
       # @return [Array] An array of train version numbers
       def all_build_train_numbers(platform: nil)
-        client.all_build_trains(app_id: self.apple_id, platform: platform).fetch("trains").collect do |current|
+        client.all_build_trains(app_id: self.apple_id, platform: platform).fetch("trains").map do |current|
           current["versionString"]
         end
       end
@@ -364,7 +364,7 @@ module Spaceship
       #####################################################
       def setup
         super
-        @version_sets = (self.raw_data['versionSets'] || []).collect do |attrs|
+        @version_sets = (self.raw_data['versionSets'] || []).map do |attrs|
           attrs[:application] = self
           Tunes::VersionSet.factory(attrs)
         end
