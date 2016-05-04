@@ -169,7 +169,7 @@ module Spaceship
 
         if self.version_sets.length == 1
           version_sets[0].platform
-        elsif self.platforms == %{ios appletvos}
+        elsif self.platforms == %w(ios appletvos)
           'ios'
         end
         Spaceship::Tunes::AppVersionCommon.find_platform(raw_data['versionSets'])['platformString']

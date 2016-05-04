@@ -17,7 +17,7 @@ module Spaceship
 
       attr_mapping(
         'type' => :type,
-        'platformString' => :platform,
+        'platformString' => :platform
       )
 
       class << self
