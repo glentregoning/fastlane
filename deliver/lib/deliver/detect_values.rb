@@ -5,6 +5,7 @@ module Deliver
       find_app(options)
       find_folders(options)
       find_version(options)
+      find_platform(options)
     end
 
     def find_app_identifier(options)
@@ -45,6 +46,14 @@ module Deliver
         options[:app_version] ||= FastlaneCore::IpaFileAnalyser.fetch_app_version(options[:ipa])
       elsif options[:pkg]
         options[:app_version] ||= FastlaneCore::PkgFileAnalyser.fetch_app_version(options[:pkg])
+      end
+    end
+
+    def find_platform(options)
+      if options[:ipa]
+        options[:platform] ||= FastlaneCore::IpaFileAnalyser.fetch_app_platform(options[:ipa])
+      elsif options[:pkg]
+        options[:platform] = 'mac'
       end
     end
   end
