@@ -3,6 +3,13 @@ require 'colored'
 
 module FastlaneCore
   module Helper
+    # This method is deprecated, use the `UI` class
+    # https://github.com/fastlane/fastlane/blob/master/fastlane/docs/UI.md
+    def self.log
+      UI.deprecated "Helper.log is deprecated. Use `UI` class instead"
+      UI.current.log
+    end
+
     # Runs a given command using backticks (`)
     # and prints them out using the UI.command method
     def self.backticks(command, print: true)
@@ -125,7 +132,7 @@ module FastlaneCore
 
     def self.fastlane_enabled?
       # This is called from the root context on the first start
-      @enabled ||= File.directory? "./fastlane"
+      @enabled ||= (File.directory?("./fastlane") || File.directory?("./.fastlane"))
     end
 
     # Path to the installed gem to load resources (e.g. resign.sh)
