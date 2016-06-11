@@ -804,8 +804,19 @@ appium(
 ### [pilot](https://github.com/fastlane/fastlane/tree/master/pilot)
 
 ```ruby
-pilot(username: "felix@krausefx.com",
-      app_identifier: "com.krausefx.app")
+pilot
+```
+
+#### Options
+
+If your account is on multiple teams and you need to tell the `iTMSTransporter` which "provider" to use, you can set the `itc_provider` option to pass this info.
+
+```ruby
+pilot(
+  username: "felix@krausefx.com",
+  app_identifier: "com.krausefx.app",
+  itc_provider: 'abcde12345' # pass a specific value to the iTMSTransporter -itc_provider option
+)
 ```
 
 More information about the available options `fastlane action pilot` and a more detailed description on the [pilot project page](https://github.com/fastlane/fastlane/tree/master/pilot).
@@ -817,7 +828,11 @@ deliver
 
 To upload a new build to TestFlight use `pilot` instead.
 
-If you don't want a PDF report for App Store builds, append ```:force``` to the command. This is useful when running ```fastlane``` on your Continuous Integration server: `deliver(force: true)`
+#### Options
+
+If you don't want a PDF report for App Store builds, append `:force` to the command. This is useful when running `fastlane` on your Continuous Integration server: `deliver(force: true)`
+
+If your account is on multiple teams and you need to tell the `iTMSTransporter` which "provider" to use, you can set the `itc_provider` option to pass this info.
 
 Other options
 
@@ -825,12 +840,13 @@ Other options
 deliver(
   force: true, # Set to true to skip PDF verification
   email: "itunes@connect.com" # different Apple ID than the dev portal
+  itc_provider: 'abcde12345' # pass a specific value to the iTMSTransporter -itc_provider option
 )
 ```
 
 See how [Product Hunt](https://github.com/fastlane/examples/blob/master/ProductHunt/Fastfile) automated the building and distributing of a beta version over TestFlight in their [Fastfile](https://github.com/fastlane/examples/blob/master/ProductHunt/Fastfile).
 
-**Note:** There is an action named `appstore` which is a convenince alias to `deliver`.
+**Note:** There is an action named `appstore` which is a convenience alias to `deliver`.
 
 ### TestFlight
 
@@ -971,14 +987,14 @@ This action allows you to upload symbolication files to Sentry.
 
 ```ruby
 upload_symbols_to_sentry(
-  api_key: '...',
+  auth_token: '...',
   org_slug: '...',
   project_slug: '...',
   dsym_path: './App.dSYM.zip'
 )
 ```
 
-The following environment variables may be used in place of parameters: `SENTRY_API_KEY`, `SENTRY_ORG_SLUG`, `SENTRY_PROJECT_SLUG`, and `SENTRY_DSYM_PATH`.
+The following environment variables may be used in place of parameters: `SENTRY_AUTH_TOKEN`, `SENTRY_ORG_SLUG`, `SENTRY_PROJECT_SLUG`, and `SENTRY_DSYM_PATH`.
 
 
 ### AWS S3 Distribution
@@ -1390,7 +1406,7 @@ update_urban_airship_configuration(
   plist_path: "AirshipConfig.plist",
   production_app_key: "PRODKEY",
   production_app_secret: "PRODSECRET"
-)  
+)
 ```
 
 ## Developer Portal
@@ -1692,7 +1708,7 @@ Executes a simple `git pull --tags` command
 ### push_to_git_remote
 Lets you push your local commits to a remote git repo. Useful if you make local changes such as adding a version bump commit (using `commit_version_bump`) or a git tag (using 'add_git_tag') on a CI server, and you want to push those changes back to your canonical/main repo.
 
-Tags will be pushed as well.
+Tags will be pushed as well by default, except when setting the option 'tags' to false.
 
 ```ruby
 push_to_git_remote # simple version. pushes 'master' branch to 'origin' remote
@@ -1701,7 +1717,8 @@ push_to_git_remote(
   remote: 'origin',         # optional, default: 'origin'
   local_branch: 'develop',  # optional, aliased by 'branch', default: 'master'
   remote_branch: 'develop', # optional, default is set to local_branch
-  force: true               # optional, default: false
+  force: true,              # optional, default: false
+  tags: false               # optional, default: true
 )
 ```
 

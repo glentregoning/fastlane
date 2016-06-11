@@ -186,7 +186,7 @@ module FastlaneCore
       return value unless ask
 
       # fallback to asking
-      if Helper.is_test? or Helper.is_ci?
+      if Helper.is_test? or !UI.interactive?
         # Since we don't want to be asked on tests, we'll just call the verify block with no value
         # to raise the exception that is shown when the user passes an invalid value
         set(key, '')
@@ -249,7 +249,7 @@ module FastlaneCore
     end
 
     # Aliases `[key]` to `fetch(key)` because Ruby can do it.
-    alias_method :[], :fetch
-    alias_method :[]=, :set
+    alias [] fetch
+    alias []= set
   end
 end
