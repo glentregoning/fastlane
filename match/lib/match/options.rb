@@ -40,7 +40,7 @@ module Match
                                      short_option: "-p",
                                      default_value: 'ios',
                                      verify_block: proc do |value|
-                                       UI.user_error!("The platform can only be ios, tvOS, or mac") unless %('ios', 'tvOS', 'mac').include? value
+                                       UI.user_error!("The platform can only be ios, tvos, or mac") unless %('ios', 'tvos', 'mac').include? value
                                      end),
         FastlaneCore::ConfigItem.new(key: :username,
                                      short_option: "-u",

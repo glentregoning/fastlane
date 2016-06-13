@@ -97,7 +97,7 @@ module Spaceship
       PASS = 'pass'.freeze
 
       # Represents a tvOS platform in Spaceship
-      TVOS = 'tvOS'.freeze
+      TVOS = 'tvos'.freeze
 
       # Represents a Mac platform in Spaceship
       MAC = 'mac'.freeze
