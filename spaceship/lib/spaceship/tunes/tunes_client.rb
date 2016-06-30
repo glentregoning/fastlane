@@ -554,8 +554,9 @@ module Spaceship
       handle_itc_response(r.body)
     end
 
-    def build_details(app_id: nil, train: nil, build_number: nil)
-      r = request(:get, "ra/apps/#{app_id}/platforms/ios/trains/#{train}/builds/#{build_number}/details")
+    def build_details(app_id: nil, train: nil, build_number: nil, platform: nil)
+      platform = 'ios' if platform.nil?
+      r = request(:get, "ra/apps/#{app_id}/platforms/#{platform}/trains/#{train}/builds/#{build_number}/details")
       handle_itc_response(r.body)
     end
 
