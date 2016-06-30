@@ -33,7 +33,7 @@ module Fastlane
           UI.user_error!("Could not find app with bundle identifier '#{params[:app_identifier]}' on account #{params[:username]}")
         end
 
-        app.all_build_train_numbers.each do |train_number|
+        app.all_build_train_numbers(platform: params[:platform]).each do |train_number|
           if version && version != train_number
             next
           end
@@ -134,7 +134,12 @@ module Fastlane
                                        short_option: "-b",
                                        env_name: "DOWNLOAD_DSYMS_BUILD_NUMBER",
                                        description: "The app build_number for dSYMs you wish to download",
-                                       optional: true)
+                                       optional: true),
+          FastlaneCore::ConfigItem.new(key: :platform,
+                                     short_option: "-p",
+                                     env_name: "DOWNLOAD_DSYMS_PLATFORM",
+                                     description: "The app platform for dSYMs you wish to download",
+                                     optional: true)
         ]
       end
 
