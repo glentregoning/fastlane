@@ -258,8 +258,9 @@ module Spaceship
       # useful if the app is not listed in the TestFlight build list
       # which might happen if you don't use TestFlight
       # This is used to receive dSYM files from Apple
-      def all_builds_for_train(train: nil)
-        client.all_builds_for_train(app_id: self.apple_id, train: train).fetch("items", []).collect do |attrs|
+      def all_builds_for_train(train: nil, platform: nil)
+        platform = 'ios' if platform.nil?
+        client.all_builds_for_train(app_id: self.apple_id, train: train, platform: platform).fetch("items", []).collect do |attrs|
           attrs[:apple_id] = self.apple_id
           Tunes::Build.factory(attrs)
         end

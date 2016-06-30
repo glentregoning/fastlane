@@ -37,7 +37,7 @@ module Fastlane
           if version && version != train_number
             next
           end
-          app.all_builds_for_train(train: train_number).each do |build|
+          app.all_builds_for_train(train: train_number, platform: params[:platform]).each do |build|
             if build_number && build.build_version != build_number
               next
             end
